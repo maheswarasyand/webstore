@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Tables\Columns\TextColumn;
 
 class ProductResource extends Resource
 {
@@ -27,13 +30,21 @@ class ProductResource extends Resource
             ->schema([
 
             Section::make()->schema([
+                SpatieMediaLibraryFileUpload::make('cover')
+                    ->collection('cover'),
+                SpatieMediaLibraryFileUpload::make('gallery')
+                    ->collection('gallery')
+                    ->multiple(),
                 TextInput::make('name')
                     ->label("Product Name"),
                 TextInput::make('sku')
                     ->label("SKU")
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
                 TextInput::make('slug')
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
+                SpatieTagsInput::make('tags')
+                    ->type('collection')
+                    ->label('collection'),
                 TextInput::make('stock')
                     ->numeric()
                     ->default(0),
@@ -52,7 +63,11 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name'),
+                TextColumn::make('sku'),
+                TextColumn::make('price'),
+                TextColumn::make('stock'),
+                TextColumn::make('price'),
             ])
             ->filters([
                 //
