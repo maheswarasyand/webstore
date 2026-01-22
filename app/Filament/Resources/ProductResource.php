@@ -14,8 +14,10 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Support\Markdown;
 use Filament\Tables\Columns\TextColumn;
 
 class ProductResource extends Resource
@@ -54,6 +56,7 @@ class ProductResource extends Resource
                 TextInput::make('weight')
                     ->numeric()
                     ->suffix('gram'),
+                MarkdownEditor::make('description'),
             ])
 
             ]);
